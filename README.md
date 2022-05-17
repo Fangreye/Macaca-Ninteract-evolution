@@ -21,4 +21,8 @@ All vcf files are placed under:
 
 # Results
 
-# Reference
+# links
+1. Chinese macaca : 
+  https://academic.oup.com/gigascience/article/7/9/giy106/5079661#121467851
+2.
+3.

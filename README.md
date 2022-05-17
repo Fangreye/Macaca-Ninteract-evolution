@@ -28,7 +28,16 @@ References genome and annotations come from UCSC:
 
 # Description of work flow and detailed pipeline
 ## Build phylogeny
-In this part, we build phylogeny based on both nuclear genome and mitochondrial genome. 
+In this part, we build phylogeny based on both nuclear genome and mitochondrial genome. The mitochondrial genome are not available directly so we need to recover it from the nuclear genome.
+
+### Get mitochondrial DNA
+Here we use Novoplasty to recover organelle genome. This progame use a seed squence as a start and try to connect k-mers to the seed. 
+
+The seed used here is NC_005943.1.
+#### Direct from Novoplasty
+```
+```
+The config file of mito
 
 
 ## Calculate different indicators

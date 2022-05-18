@@ -113,7 +113,13 @@ python3 /home/zhu46/softwares/GetOrganelle-1.7.4.1/get_organelle_from_reads.py \
 The pipeline is similar to create a phylogenetic tree with nuclear genome. But mitochondrial genome is circularized, which means that the start position of a fasta record can be any site of that genome. Temporarily there is no good solution to deal with this problem. The solution here is to find the most common sequence across all samples and use it as the universal start across all samples.
 
 ## Calculate different indicators
+### Length of runs of homozygosity
+### Fst
+### Pairwise Nucleotide diversity
+### dNdS 
+
 ## Fit the model
+
 
 # Results
 

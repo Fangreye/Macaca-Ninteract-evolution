@@ -93,7 +93,7 @@ Output path           = /home/zhu46/scratch/maca_800_out/mito24
 If Novoplasty successfully generate the entire organelle genome, the genome will be recorded in a fasta file with prefix 'mito{your_kmer}Circularized_assembly'. There will also be a fasta file with prefix 'mito{your_kmer}Contigs' which contains all possible contigs retrieved from raw reads. It is suggested to check the link map and concatenate them mannually.
 
 #### Combined with GetOrganelle
-If Novoplasty didn't give an acceptable output, it's still possible to retrieve the genome. GetOrganelle is also a software use the strategy of mapping-then-extend, which means it can generate accurate contigs. If it didn't provide a complete organelle genome, we can feed the longest contig in the output as the seed of Novoplasty. It is also suggested to check the link map produced by SPAde to assemble a longer contig before proceeding.
+If Novoplasty didn't give an acceptable output, it's still possible to retrieve the genome. GetOrganelle is a software use the strategy of mapping-then-extend, which means it can generate accurate contigs. If it didn't provide a complete organelle genome, we can feed the longest contig in the output as the seed of Novoplasty. It is also suggested to check the link map produced by SPAde to assemble a longer contig before proceeding.
 
 ```
 python3 /home/zhu46/softwares/GetOrganelle-1.7.4.1/get_organelle_from_reads.py \
@@ -108,6 +108,9 @@ python3 /home/zhu46/softwares/GetOrganelle-1.7.4.1/get_organelle_from_reads.py \
 -R 7 --reduce-reads-for-coverage 1000 \
 --max-reads 9E9 --max-extending-len 9E9 &
 ```
+
+### Build phylogenetic tree
+The pipeline is similar to create a phylogenetic tree with nuclear genome. But mitochondrial genome is circularized, which means that the start position of a fasta record can be any site of that genome. Temporarily there is no good solution to deal with this problem. The solution here is to find the most common sequence across all samples and use it as the universal start across all samples.
 
 ## Calculate different indicators
 ## Fit the model

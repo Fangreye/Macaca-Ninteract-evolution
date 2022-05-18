@@ -33,12 +33,62 @@ In this part, we build phylogeny based on both nuclear genome and mitochondrial 
 ### Get mitochondrial DNA
 Here we use Novoplasty to recover organelle genome. This progame use a seed squence as a start and try to connect k-mers to the seed. 
 
-The seed used here is NC_005943.1.
+The seed used here is NC_005943.1, which can be downloaded from NCBI Database
 #### Direct from Novoplasty
+Assemble with Novoplasty requires a lot of memory. According to my experience, RAM should be 2~3 times of the size of raw compressed fasta file.
 ```
-```
-The config file of mito
+#!/bin/sh
+#SBATCH --job-name=SRR1927139_MMUL.IN-28474_mito
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=3
+#SBATCH --time=4:00:00
+#SBATCH --mem=65gb
+#SBATCH --output=popgenWindows.%J.out
+#SBATCH --error=popgenWindows.%J.err
+#SBATCH --account=def-ben
 
+perl /home/zhu46/softwares/NOVOPlasty-master/NOVOPlasty4.3.1.pl \
+  -c /home/zhu46/scratch/maca_800_config/SRR1927139.txt # The location of configure file
+```
+The config file of mito with some explanation. Examples were placed under 
+```
+Project:
+-----------------------
+Project name          = MMUL.IN-28474
+Type                  = mito
+Genome Range          = 12000-22000
+K-mer                 = 24
+Max memory            = 60
+Extended log          = 0
+Save assembled reads  = no
+Seed Input            = /home/zhu46/softwares/mulatta_mito.fasta 
+Extend seed directly  = no
+Variance detection    = 
+
+Dataset 1:
+-----------------------
+Read Length           = 101
+Insert size           = 202
+Platform              = illumina
+Single/Paired         = PE
+Combined reads        = 
+Forward reads         = /home/zhu46/scratch/source/fastq/SRR1927139_1.fastq.gz
+Reverse reads         = /home/zhu46/scratch/source/fastq/SRR1927139_2.fastq.gz
+Store Hash            =
+
+Heteroplasmy:
+-----------------------
+MAF                   = 
+HP exclude list       = 
+PCR-free              = 
+
+Optional:
+-----------------------
+Insert size auto      = yes
+Use Quality Scores    = no
+Output path           = /home/zhu46/scratch/maca_800_out/mito24
+
+```
 
 ## Calculate different indicators
 ## Fit the model

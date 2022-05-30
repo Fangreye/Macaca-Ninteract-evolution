@@ -99,6 +99,7 @@ If Novoplasty didn't give an acceptable output, it's still possible to retrieve 
 module load StdEnv/2020  gcc/9.3.0 blast+
 module load bowtie2
 module load spades/3.15.3
+module load scipy-stack
 
 python3 /home/zhu46/softwares/GetOrganelle-1.7.4.1/get_organelle_from_reads.py \
 -1 /home/zhu46/projects/rrg-ben/2021_Indian_rhesus/aureus_raw_data/SRR1564766_M_fasc_Maurit/SRR1564766_trim.R1.fixed.fq.gz \

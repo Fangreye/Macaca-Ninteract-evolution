@@ -96,6 +96,10 @@ If Novoplasty successfully generate the entire organelle genome, the genome will
 If Novoplasty didn't give an acceptable output, it's still possible to retrieve the genome. GetOrganelle is a software use the strategy of mapping-then-extend, which means it can generate accurate contigs. If it didn't provide a complete organelle genome, we can feed the longest contig in the output as the seed of Novoplasty. It is also suggested to check the link map produced by SPAde to assemble a longer contig before proceeding.
 
 ```
+module load StdEnv/2020  gcc/9.3.0 blast+
+module load bowtie2
+module load spades/3.15.3
+
 python3 /home/zhu46/softwares/GetOrganelle-1.7.4.1/get_organelle_from_reads.py \
 -1 /home/zhu46/projects/rrg-ben/2021_Indian_rhesus/aureus_raw_data/SRR1564766_M_fasc_Maurit/SRR1564766_trim.R1.fixed.fq.gz \
 -2 /home/zhu46/projects/rrg-ben/2021_Indian_rhesus/aureus_raw_data/SRR1564766_M_fasc_Maurit/SRR1564766_trim.R2.fixed.fq.gz \

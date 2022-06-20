@@ -236,7 +236,7 @@ python fasta_analysis.py \
 #### Execute paml
 ```
 #!/bin/sh
-#SBATCH --job-name=codeml_{{input}}
+#SBATCH --job-name=codeml_Chinese_Normal_000
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=20
 #SBATCH --time=3:00:00
@@ -247,16 +247,16 @@ python fasta_analysis.py \
 
 module load paml
 
-cat {{input_name}} | \
-xargs -n 1 -P 20 -I {} sh -c "seqfile="{}" ;\
-  gene_name=\$(basename \$seqfile .fasta); 
-  treefile=/home/zhu46/scratch/macaca/111.dNdS_analysis/06.paml_config/{{tree_file}} ;\
-  outfile=/scratch/zhu46/macaca/111.dNdS_analysis/07.output/{{species}}/{{type}}/\${gene_name}.mlc ;\
-  export seqfile ; export treefile; export outfile ;\
-  envsubst < /scratch/zhu46/macaca/111.dNdS_analysis/06.paml_config/codeml.ctl \
-  > /scratch/zhu46/macaca/111.dNdS_analysis/06.paml_config/{{species}}/\${gene_name}.ctl ;\
-  echo Y | codeml /scratch/zhu46/macaca/111.dNdS_analysis/06.paml_config/{{species}}/\${gene_name}.ctl || \
-  exit 0"
+cat /home/zhu46/scratch/macaca/111.dNdS_analysis/03.Chinese/03.paml_input_sampled/files/Chinese_Normal_000 | \
+  xargs -n 1 -P 20 -I {} sh -c "seqfile="{}" ;\
+    gene_name=\$(basename \$seqfile .fasta); 
+    treefile=/home/zhu46/scratch/macaca/111.dNdS_analysis/06.paml_config/rhe_China_aDNA.tre ;\
+    outfile=/scratch/zhu46/macaca/111.dNdS_analysis/07.output/Chinese/Normal/\${gene_name}.mlc ;\
+    export seqfile ; export treefile; export outfile ;\
+    envsubst < /scratch/zhu46/macaca/111.dNdS_analysis/06.paml_config/codeml.ctl \
+    > /scratch/zhu46/macaca/111.dNdS_analysis/06.paml_config/Chinese/\${gene_name}.ctl ;\
+    echo Y | codeml /scratch/zhu46/macaca/111.dNdS_analysis/06.paml_config/Chinese/\${gene_name}.ctl || \
+    exit 0"
 ```
 
 See 04.codeml.ctl for default parameters.

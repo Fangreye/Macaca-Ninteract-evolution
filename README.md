@@ -267,13 +267,30 @@ python ../../get_dNdS.py -i Ninteract/ -o Chinese_Ninteract.csv > Ninteract_fail
 ```
 
 # Data analysis
+## Annotate the results of roh/fst/pi and perform permutation test
+To quantify the effect of containing genes and N-interact genes, we need to annotate the roh/sliding windows. A random shaffle of the label representing having Ninteract genes is also executed during this step.
 
-
-# Results
+Use scripts inside 'Permutation test' like the following examples.
+```
+for i in $(ls /home/jianlong/Data/rhesus/05.fst_100k_30k/concated_roh_out/fas); do q=$(basename $i .txt);
+  python3 ~/Data/rhesus/02.corrected_roh_density/ROH_permutation_v1.1.py \
+    -i /home/jianlong/Data/rhesus/05.fst_100k_30k/concated_roh_out/fas/$i \
+    -a ~/Data/rhesus/05.fst_100k_30k/rheMac8.ncbiRefSeq.CDS.marked.corrected.gtf \
+    -o /home/jianlong/Data/rhesus/05.fst_100k_30k/roh_out/fas/${q}.density.out \
+    -s /home/jianlong/Data/rhesus/05.fst_100k_30k/roh_out/fas/${q}.perm.out; done
+```
+```
+ls *.csv | xargs -I {} -n 1 -P 30 sh -c 'q=$(basename {} .csv); perl ~/Data/rhesus/02.corrected_roh_density/All_N_mt_allinteract_fst_permutation.pl \
+  ~/Data/rhesus/02.corrected_roh_density/rheMac10.ncbiRefSeq.marked.out {} \
+  /home/jianlong/Data/rhesus/09.find_auto/indian_all/output/${q}.density.out \
+  2>/dev/null 1> /home/jianlong/Data/rhesus/09.find_auto/indian_all/output/${q}.perms.out'
+```
+## Model fitting with R
+Considering autocorrelation, we use block bootstrap to fit the linear model for sliding windows. See 'R_script' for further information
 
 # Others
 ## Difference between two versions of reference:
-
+See stats_for_annotation_onlyautosome.xlsx
 
 # links
 1. Chinese macaca : https://academic.oup.com/gigascience/article/7/9/giy106/5079661#121467851

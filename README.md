@@ -234,6 +234,7 @@ python fasta_analysis.py \
 ```
 
 #### Execute paml
+Here we only sample part of the entire annotated genes and use them for paml.
 ```
 #!/bin/sh
 #SBATCH --job-name=codeml_Chinese_Normal_000
@@ -258,8 +259,12 @@ cat /home/zhu46/scratch/macaca/111.dNdS_analysis/03.Chinese/03.paml_input_sample
     echo Y | codeml /scratch/zhu46/macaca/111.dNdS_analysis/06.paml_config/Chinese/\${gene_name}.ctl || \
     exit 0"
 ```
-
 See 04.codeml.ctl for default parameters.
+
+After getting the results from all sampled genes, use 05.get_dNdS.py to convert them into single table.
+```
+python ../../get_dNdS.py -i Ninteract/ -o Chinese_Ninteract.csv > Ninteract_failed.txt
+```
 
 # Data analysis
 

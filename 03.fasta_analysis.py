@@ -72,6 +72,9 @@ class Ndict(dict):
             self[keys] = [value]
 
 def read_fasta(infile:Path) -> Dict:
+    '''
+    Read in fasta file.
+    '''
     patt = re.compile(r">(?P<chr>chr\d*):(?P<start>\d*)-(?P<end>\d*)")
     with infile.open() as f:
         temp_holder = dict()
@@ -88,6 +91,9 @@ def read_fasta(infile:Path) -> Dict:
     return temp_holder
 
 def read_bed(infile:Path) -> Dict:
+    '''
+    Read in bed file
+    '''
     with infile.open() as f:
         temp_holder = dict()
         for line in f:

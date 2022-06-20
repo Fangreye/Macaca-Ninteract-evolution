@@ -119,8 +119,51 @@ The pipeline is similar to create a phylogenetic tree with nuclear genome. But m
 
 ## Calculate different indicators
 ### Length of runs of homozygosity
+Example code
+```
+#!/bin/sh
+#SBATCH --job-name=brown_chr1_bcf
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=2
+#SBATCH --time=1:00:00
+#SBATCH --mem=20gb
+#SBATCH --output=popgenWindows.%J.out
+#SBATCH --error=popgenWindows.%J.err
+#SBATCH --account=def-ben
+
+module load bcftools
+
+bcftools roh -G30 --AF-dflt 0.4 -s '34753,35495,35498,28500,38621,35723,38627,39317' # sample names inside the vcf file \
+/home/zhu46/projects/rrg-ben/2021_Indian_rhesus/output.filtered.snps.removed.AB.pass.1.vep.vcf.gz | grep 'RG' > /home/zhu46/scratch/maca_800_roh/roh_chr1_brown.txt
+```
+
 ### Fst
-### Pairwise Nucleotide diversity
+#### Phase and parse
+Vcf files need to be phased before continue. These steps can run fast so it's better to execute them in interactive terminal.
+
+The following pipeline comes from software 'beagle':
+
+https://faculty.washington.edu/browning/beagle/beagle.html
+```
+java -Xmx28g -jar ~/softwares/beagle.29May21.d6d.jar \
+gt=/home/zhu46/scratch/source/Chinese_sep_chr/population.1.vcf.gz \
+out=/home/zhu46/scratch/22.windows_30k_popgen/chinese_phased_vcf/chinese_population.1.phased.vcf.gz.vcf.gz && \
+```
+
+The following pipeline comes from software 'VCF_processing':
+
+https://github.com/simonhmartin/genomics_general/tree/master/VCF_processing
+```
+python /home/zhu46/scratch/genomics_general/VCF_processing/parseVCF.py \
+-i chinese_phased_vcf/chinese_population.1.phased.vcf.gz.vcf.gz | gzip \
+> ./chinese_parsed_vcf/chinese_population.1.phased.parsed.vcf.gz
+```
+#### Calculating Fst values
+```
+```
+
+
+### Pairwise Nucleotide diversity {pi}
 ### dNdS 
 
 ## Fit the model

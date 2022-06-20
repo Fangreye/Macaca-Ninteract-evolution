@@ -233,6 +233,33 @@ python fasta_analysis.py \
   -p Arctoides -g ./sample_Arctoides.txt
 ```
 
+#### Execute paml
+```
+#!/bin/sh
+#SBATCH --job-name=codeml_{{input}}
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=20
+#SBATCH --time=3:00:00
+#SBATCH --mem=10gb
+#SBATCH --output=popgenWindows.%J.out
+#SBATCH --error=popgenWindows.%J.err
+#SBATCH --account=def-ben
+
+module load paml
+
+cat {{input_name}} | \
+xargs -n 1 -P 20 -I {} sh -c "seqfile="{}" ;\
+gene_name=\$(basename \$seqfile .fasta); 
+treefile=/home/zhu46/scratch/macaca/111.dNdS_analysis/06.paml_config/{{tree_file}} ;\
+ outfile=/scratch/zhu46/macaca/111.dNdS_analysis/07.output/{{species}}/{{type}}/\${gene_name}.mlc ;\
+ export seqfile ; export treefile; export outfile ;\
+ envsubst < /scratch/zhu46/macaca/111.dNdS_analysis/06.paml_config/codeml.ctl \
+ > /scratch/zhu46/macaca/111.dNdS_analysis/06.paml_config/{{species}}/\${gene_name}.ctl ;\
+ echo Y | codeml /scratch/zhu46/macaca/111.dNdS_analysis/06.paml_config/{{species}}/\${gene_name}.ctl || \
+ exit 0"
+```
+
+
 # Data analysis
 
 

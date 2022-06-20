@@ -19,7 +19,7 @@ arguments:
     -p | --prefix prefix
         The prefix added to the output
     -g | --genes
-        The set of genes to analysis
+        File contains a set of genes to analysis
     -h | --help :
         To show this message
 '''

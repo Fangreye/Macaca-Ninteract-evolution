@@ -1,0 +1,7 @@
+DRR219371_trim_sorted.bam fascicularis
+SRA023855_trim_sorted.bam fascicularis
+SRR1564766_trim_sorted.bam fascicularis
+DRR219370_trim_sorted.bam aureus
+DRR219369_trim_sorted.bam aureus
+SRR1024051_trim_sorted.bam thibetana
+SRR2981114_trim_sorted.bam assamensis

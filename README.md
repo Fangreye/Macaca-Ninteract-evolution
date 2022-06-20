@@ -119,6 +119,8 @@ The pipeline is similar to create a phylogenetic tree with nuclear genome. But m
 
 ## Calculate different indicators
 ### Length of runs of homozygosity
+Long runs of homozygosity reveals that this region are under selection during a long period. 
+
 Example code
 ```
 #!/bin/sh
@@ -133,11 +135,14 @@ Example code
 
 module load bcftools
 
-bcftools roh -G30 --AF-dflt 0.4 -s '34753,35495,35498,28500,38621,35723,38627,39317' # sample names inside the vcf file \
+bcftools roh -G30 --AF-dflt 0.4 -s '34753,35495,35498,28500,38621,35723,38627,39317' # sample names in the same group inside the vcf file \
 /home/zhu46/projects/rrg-ben/2021_Indian_rhesus/output.filtered.snps.removed.AB.pass.1.vep.vcf.gz | grep 'RG' > /home/zhu46/scratch/maca_800_roh/roh_chr1_brown.txt
 ```
 
-### Fst
+### Pairwise Fst
+In this step, we calculate the Fst values based on sliding windows within each chromosome between two subgroups. 
+
+High Fst value implies that subgroups are highly differentiated. In our case, it means that the interaction between nuclear gene and mitochondrial gene is under selection in breeding and the fitness will be different in different groups. 
 #### Phase and parse
 Vcf files need to be phased before continue. These steps can run fast so it's better to execute them in interactive terminal.
 
@@ -159,8 +164,6 @@ python /home/zhu46/scratch/genomics_general/VCF_processing/parseVCF.py \
 > ./chinese_parsed_vcf/chinese_population.1.phased.parsed.vcf.gz
 ```
 #### Calculating Fst values
-In this step, we calculate the Fst values based on sliding windows within each chromosome.
-
 The following pipeline comes from software 'genomics_general':
 
 https://github.com/simonhmartin/genomics_general
@@ -181,20 +184,24 @@ for i in {1..20}; do
 python /home/zhu46/scratch/genomics_general/popgenWindows.py \
 -g /home/zhu46/scratch/22.windows_30k_popgen/aureus_parsed_vcf/chr${i}.filtered.cleaned.phased.parsed.vcf.gz \
 -o /home/zhu46/scratch/22.aure_fst_pi_roh_redo/fst/30k/chr${i}_aureus_fascicularis.csv \
--m 1 -p aureus -p fascicularis -f phased -T 1 \
+-m 1 -f phased -T 1 \
+-p aureus -p fascicularis # define\
 --popsFile /home/zhu46/scratch/22.aure_fst_pi_roh_redo/aureus_species.txt \
 -w 30000 -s 30000 # -w define the size of window and -s define the start of next window \
 --writeFailedWindows -m 10 --windType coordinate & done
 ```
 
 This pipeline needs a file containing sample names and their group. The format should be 'Sample_name Group_name'.
-See file aureus_species.txt as an example.
+See file 02.aureus_species.txt as an example.
 
+### Group Nucleotide diversity {pi}
+Low nucleotide diversity means that this region is under selection in recent time. 
 
-### Pairwise Nucleotide diversity {pi}
+Pi values are already contained in the output of popgenWindows.py. They are located in the 6th and 7th column.
 ### dNdS 
+dNdS value is an indicator 
 
-## Fit the model
+## Data analysis
 
 
 # Results

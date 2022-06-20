@@ -3,9 +3,6 @@ Normal <- read.csv("F:/Work/Now_work/2021_05_18.ben_/10.dNdS/10.a_output/Chinese
 colnames(N_interact) <- c("gene","dN","dS")
 colnames(Normal) <- c("gene","dN","dS")
 
-# N_interact <- N_interact[N_interact$V3 != 0,]
-# Normal <- Normal[Normal$V3 != 0,]
-
 dNdS.Ninteract <- N_interact$dN / N_interact$dS
 N_interact.dNdS <- data.frame(dNdS = dNdS.Ninteract, type = rep(1,length(N_interact[,1])))
 N_interact <- cbind(N_interact, N_interact.dNdS)
@@ -33,29 +30,7 @@ with(data[data$type ==0 ,], plot(dS, dN, main = paste0('Meaningful Normal:' , le
 with(data[data$type ==1 ,], plot(dS, dN, main = paste0('Meaningful N-interact:' , length(data$dN[data$type ==1]) ,'/', length(data1$dN[data1$type ==1])) ))
 dev.off()
 
-# png("F:/Work/Now_work/2021_05_18.ben_/10.dNdS/05.values/Chinese_cate.jpg", width = 1200, height = 700)
-# par(mfrow=c(1,2), cex.axis=2  ,cex.lab  = 3, mar = c(8, 8, 4, 4))
-# 
-# dev.off()
-
-# png("F:/Work/Now_work/2021_05_18.ben_/10.dNdS/05.values/Chinese_stats.jpg", width = 1200, height = 800)
-# par(mfrow=c(1,3))
-# hist(dNdS.Ninteract)
-# hist(N_interact$dN)
-# hist(N_interact$dS)
-# hist(dNdS.Normal)
-# hist(Normal$dN)
-# hist(Normal$dS)
-# dev.off()
-# png("F:/Work/Now_work/2021_05_18.ben_/10.dNdS/05.values/Chinese_stats.jpg", width = 1200, height = 800)
-# par(mfrow=c(1,3))
-# hist(dNdS)
-# hist(N_interact$dN)
-# hist(N_interact$dS)
-# hist(dNdS.Normal)
-# hist(Normal$dN)
-# hist(Normal$dS)
-# dev.off()
+## Permutation
 
 data2 <- data[data$dNdS<=5,]
 

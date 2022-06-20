@@ -102,16 +102,16 @@ module load spades/3.15.3
 module load scipy-stack
 
 python3 /home/zhu46/softwares/GetOrganelle-1.7.4.1/get_organelle_from_reads.py \
--1 /home/zhu46/projects/rrg-ben/2021_Indian_rhesus/aureus_raw_data/SRR1564766_M_fasc_Maurit/SRR1564766_trim.R1.fixed.fq.gz \
--2 /home/zhu46/projects/rrg-ben/2021_Indian_rhesus/aureus_raw_data/SRR1564766_M_fasc_Maurit/SRR1564766_trim.R2.fixed.fq.gz \
--s /home/zhu46/softwares/mulatta_mito.fasta # the seed sequence \
--o /home/zhu46/scratch/Get_Organelle_test/SRR1564766 \
---continue -t 3 \
--F animal_mt -w 32 # word size when extending the contigs \
--k 25,55,75,95 # set of kmers used when detecting the connection. This and the following arguments are optimum to the mulatta dataset \
---max-n-words 5E9 \
--R 7 --reduce-reads-for-coverage 1000 \
---max-reads 9E9 --max-extending-len 9E9 &
+  -1 /home/zhu46/projects/rrg-ben/2021_Indian_rhesus/aureus_raw_data/SRR1564766_M_fasc_Maurit/SRR1564766_trim.R1.fixed.fq.gz \
+  -2 /home/zhu46/projects/rrg-ben/2021_Indian_rhesus/aureus_raw_data/SRR1564766_M_fasc_Maurit/SRR1564766_trim.R2.fixed.fq.gz \
+  -s /home/zhu46/softwares/mulatta_mito.fasta # the seed sequence \
+  -o /home/zhu46/scratch/Get_Organelle_test/SRR1564766 \
+  --continue -t 3 \
+  -F animal_mt -w 32 # word size when extending the contigs \
+  -k 25,55,75,95 # set of kmers used when detecting the connection. This and the following arguments are optimum to the mulatta dataset \
+  --max-n-words 5E9 \
+  -R 7 --reduce-reads-for-coverage 1000 \
+  --max-reads 9E9 --max-extending-len 9E9 &
 ```
 
 ### Build phylogenetic tree
@@ -135,8 +135,10 @@ Example code
 
 module load bcftools
 
-bcftools roh -G30 --AF-dflt 0.4 -s '34753,35495,35498,28500,38621,35723,38627,39317' # sample names in the same group inside the vcf file \
-/home/zhu46/projects/rrg-ben/2021_Indian_rhesus/output.filtered.snps.removed.AB.pass.1.vep.vcf.gz | grep 'RG' > /home/zhu46/scratch/maca_800_roh/roh_chr1_brown.txt
+bcftools roh \
+  -G30 --AF-dflt 0.4 -s '34753,35495,35498,28500,38621,35723,38627,39317' # sample names in the same group inside the vcf file \
+  /home/zhu46/projects/rrg-ben/2021_Indian_rhesus/output.filtered.snps.removed.AB.pass.1.vep.vcf.gz \
+| grep 'RG' > /home/zhu46/scratch/maca_800_roh/roh_chr1_brown.txt
 ```
 
 ### Pairwise Fst
@@ -182,13 +184,13 @@ module load StdEnv/2020 scipy-stack/2020b python/3.8.2
 
 for i in {1..20}; do 
 python /home/zhu46/scratch/genomics_general/popgenWindows.py \
--g /home/zhu46/scratch/22.windows_30k_popgen/aureus_parsed_vcf/chr${i}.filtered.cleaned.phased.parsed.vcf.gz \
--o /home/zhu46/scratch/22.aure_fst_pi_roh_redo/fst/30k/chr${i}_aureus_fascicularis.csv \
--m 1 -f phased -T 1 \
--p aureus -p fascicularis # define\
---popsFile /home/zhu46/scratch/22.aure_fst_pi_roh_redo/aureus_species.txt \
--w 30000 -s 30000 # -w define the size of window and -s define the start of next window \
---writeFailedWindows -m 10 --windType coordinate & done
+  -g /home/zhu46/scratch/22.windows_30k_popgen/aureus_parsed_vcf/chr${i}.filtered.cleaned.phased.parsed.vcf.gz \
+  -o /home/zhu46/scratch/22.aure_fst_pi_roh_redo/fst/30k/chr${i}_aureus_fascicularis.csv \
+  -m 1 -f phased -T 1 \
+  -p aureus -p fascicularis # define\
+  --popsFile /home/zhu46/scratch/22.aure_fst_pi_roh_redo/aureus_species.txt \
+  -w 30000 -s 30000 # -w define the size of window and -s define the start of next window \
+  --writeFailedWindows -m 10 --windType coordinate & done
 ```
 
 This pipeline needs a file containing sample names and their group. The format should be 'Sample_name Group_name'.
@@ -209,8 +211,8 @@ bcftools view --types snps /home/zhu46/scratch/source/Chinese_sep_chr/population
 And an reference sequence file only containing coding regions
 ```
 bedtools getfasta \
--fi /home/zhu46/projects/rrg-ben/2021_Indian_rhesus/2021_rhemac_v10/rheMac10.fa \
--bed /home/zhu46/scratch/111.dNdS_analysis/01.build_bed/rheMac10.dedup.bed > rheMac10_1_ref.fasta
+  -fi /home/zhu46/projects/rrg-ben/2021_Indian_rhesus/2021_rhemac_v10/rheMac10.fa \
+  -bed /home/zhu46/scratch/111.dNdS_analysis/01.build_bed/rheMac10.dedup.bed > rheMac10_1_ref.fasta
 ```
 Then create single sample consensus sequence.
 ```
@@ -223,8 +225,12 @@ done
 ```
 There could be other methods but the length of coding regions should be the same across all samples.
 
-After creating all samples
+After creating consensus sequence of all samples, use '03.fasta_analysis.py' to convert them into paml acceptable format
 ```
+python fasta_analysis.py \
+  -i 05.artoicide/02.source_fasta/ -o 05.artoicide/03.paml_input_sampled \
+  -b 01.build_bed/rheMac8.closed.dedup.bed \
+  -p Arctoides -g ./sample_Arctoides.txt
 ```
 
 # Data analysis

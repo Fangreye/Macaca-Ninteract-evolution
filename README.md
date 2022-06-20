@@ -199,9 +199,35 @@ Low nucleotide diversity means that this region is under selection in recent tim
 
 Pi values are already contained in the output of popgenWindows.py. They are located in the 6th and 7th column.
 ### dNdS 
-dNdS value is an indicator 
+dNdS value is also an indicator of selection but it can reveal that which type of selection operates on that gene.  
 
-## Data analysis
+#### Data preparation
+We first need to build a snp-only vcf.
+```
+bcftools view --types snps /home/zhu46/scratch/source/Chinese_sep_chr/population.1.vcf.gz > /home/zhu46/scratch/source/Chinese_sep_chr/population.1.snp.vcf.gz
+```
+And an reference sequence file only containing coding regions
+```
+bedtools getfasta \
+-fi /home/zhu46/projects/rrg-ben/2021_Indian_rhesus/2021_rhemac_v10/rheMac10.fa \
+-bed /home/zhu46/scratch/111.dNdS_analysis/01.build_bed/rheMac10.dedup.bed > rheMac10_1_ref.fasta
+```
+Then create single sample consensus sequence.
+```
+for i in  SRR1024051_trim_sorted.bam  SRR2981114_trim_sorted.bam;
+do cat /home/zhu46/scratch/macaca/111.dNdS_analysis/00.seq_data/rheMac10_1_ref.fasta | \
+    bcftools consensus -s ${i} -M N -o /home/zhu46/scratch/macaca/111.dNdS_analysis/04.aureus/02.source_fasta/${i}.fasta \
+    /home/zhu46/scratch/macaca/111.dNdS_analysis/04.aureus/01.snp_only_vcf/aureus.snp.vcf.gz & 
+    [ $( jobs | wc -l ) -ge $( nproc ) ] && wait
+done
+```
+There could be other methods but the length of coding regions should be the same across all samples.
+
+After creating all samples
+```
+```
+
+# Data analysis
 
 
 # Results

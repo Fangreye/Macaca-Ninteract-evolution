@@ -27,44 +27,45 @@ pairses_list <- list(
 )
 
 size = "100k"
+
 total_length <- 0
 for (item in pairses_list) {
   total_length <- total_length + length(item)
 }
+
 est <- rep(0,total_length)
 upper <- rep(0.0 ,total_length)
 downer <- rep(0.0 ,total_length)
 significance <- rep("" ,total_length)
 total_lable <- rep("" ,total_length)
 
+par(mfrow=c(5,4))  
+cnt <- 0
+for (i in seq(1,4)) {
+  speciy <- species[i]
+  pairses <- pairses_list[[i]]
 
+    for (pairs in pairses) {
+      cnt <- cnt + 1
 
-  total_length <- 0
-  for (item in pairses_list) {
-    total_length <- total_length + length(item)
-  }
-  est <- rep(0,total_length)
-  upper <- rep(0.0 ,total_length)
-  downer <- rep(0.0 ,total_length)
-  significance <- rep("" ,total_length)
-  total_lable <- rep("" ,total_length)
-  
-  par(mfrow=c(5,4))  
-  cnt <- 0
-  for (i in seq(1,4)) {
-    speciy <- species[i]
-    pairses <- pairses_list[[i]]
-  
-      for (pairs in pairses) {
-        cnt <- cnt + 1
-        
-        filpath <- file.path( root,'fst_out',size,speciy,paste0("fst_",pairs,'.density.out'))
-        #assign(paste(pair,'fst',sep='.'),read.table(filpath, header = T))
-        assign("pair",read.table(filpath, header = T))
-        # ptr("pair",paste(pair,'fst',sep='.'))
-        pair <- pair[pair$containsgenes == 1,]
-        pair <- na.exclude(pair)
-        
+      filpath <- file.path( root,'fst_out',size,speciy,paste0("fst_",pairs,'.density.out'))
+      #assign(paste(pair,'fst',sep='.'),read.table(filpath, header = T))
+      assign("pair",read.table(filpath, header = T))
+      # ptr("pair",paste(pair,'fst',sep='.'))
+      pair <- pair[pair$containsgenes == 1,]
+      pair <- na.exclude(pair)
+      
+      
+      mod <- lm(Fst ~ containsNinteractgenez * number_of_genes, data=pair)
+
+      res1 <- mod
+
+      est[cnt] <- res1$coefficients[2,1]
+      significance[cnt] <- res1$coefficients[2,4]
+      upper[cnt] <- confint(mod)[2,2]
+      downer[cnt] <- confint(mod)[2,1]
+      total_lable[cnt] <- pairs
+      
       #       mod <- lm(Fst ~ containsNinteractgenez + number_of_genes, data=pair)
       #       acf(mod$residuals, main = pairs)
       # 
@@ -79,19 +80,9 @@ total_lable <- rep("" ,total_length)
       # }
       # plot(y=sort(pair$Fst), x = seq(1:length(pair$Fst)),main=pairs)
         #hist(pair$Fst, main = pairs, breaks = seq(-0.1,0.2,0.005))
-        
-        mod <- lm(Fst ~ containsNinteractgenez * number_of_genes, data=pair)
+    }
+}
 
-        res1 <- mod
-  
-        est[cnt] <- res1$coefficients[2,1]
-        significance[cnt] <- res1$coefficients[2,4]
-        upper[cnt] <- confint(mod)[2,2]
-        downer[cnt] <- confint(mod)[2,1]
-        total_lable[cnt] <- pairs
-      }
-  }
-  
   values <- round(est, digits = 4)
   for (index in seq(1,length(significance))) {
     if (significance[index] < 0.05 ) {

@@ -120,7 +120,20 @@ The pipeline is similar to create a phylogenetic tree with nuclear genome. But m
 ## Calculate different indicators
 ### Tajima's D
 ```
-vcftools --gzvcf population.19.vcf.gz --out tajimasd --TajimaD 10000
+module load bcftools
+module load vcftools
+
+cat /home/zhu46/scratch/macaca/25.tajima/index.txt |
+xargs -I {} -P 10 -n 1 sh -c "
+bcftools view -s '32754' --force-samples \
+    output.filtered.snps.removed.AB.pass."{}".vep.vcf.gz > /home/zhu46/scratch/macaca/25.tajima/temp/population."{}".temp.vcf \
+    && vcftools --vcf /home/zhu46/scratch/macaca/25.tajima/temp/population."{}".temp.vcf \
+    --out /home/zhu46/scratch/macaca/25.tajima/indian.red.tajima.chr"{}" --TajimaD 100000 \
+    && rm /home/zhu46/scratch/macaca/25.tajima/temp/population."{}".temp.vcf
+"
+
+rm *.log ; for i in {1..20}; do cat indian.red.tajima.chr${i}.Tajima.D \
+    >> indian.red.100k.TajimaD.txt; rm indian.red.tajima.chr${i}.Tajima.D; done
 ```
 
 ### Length of runs of homozygosity

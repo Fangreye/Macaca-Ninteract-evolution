@@ -61,7 +61,7 @@ assamensis A20,XH1.Assamensis
 
 thibetana Tibetan-macaque-NO.3
 
-mulata BGI-96346.mulatta,BGI.Mulatta-1,CR-5.Mulatta-2
+mulatta BGI-96346.mulatta,BGI.Mulatta-1,CR-5.Mulatta-2
 
 fascicularis BGI-CE-4.fascicularis
 

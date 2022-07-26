@@ -261,6 +261,12 @@ Pi values are already contained in the output of popgenWindows.py. They are loca
 
 ### Group iHH
 The vcf file should also be phased and bgzipped.
+
+vignette explaining iHH:
+https://cran.r-project.org/web/packages/rehh/vignettes/rehh.html#computing-ehh-ehhs-and-their-integrals-ihh-and-ies
+Mannual of vcflib (at the bottom):
+http://gensoft.pasteur.fr/docs/vcflib/1.0.1/README.md
+
 ```
 module load htslib/1.14
 module load vcflib/1.0.3

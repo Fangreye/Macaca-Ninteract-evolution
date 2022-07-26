@@ -222,6 +222,7 @@ python /home/zhu46/scratch/genomics_general/VCF_processing/parseVCF.py \
 -i chinese_phased_vcf/chinese_population.1.phased.vcf.gz.vcf.gz | gzip \
 > ./chinese_parsed_vcf/chinese_population.1.phased.parsed.vcf.gz
 ```
+
 #### Calculating Fst values
 The following pipeline comes from software 'genomics_general':
 
@@ -257,6 +258,26 @@ See file 02.aureus_species.txt as an example.
 Low nucleotide diversity means that this region is under selection in recent time. 
 
 Pi values are already contained in the output of popgenWindows.py. They are located in the 6th and 7th column.
+
+### Group iHH
+The vcf file should also be phased and bgzipped.
+```
+module load htslib/1.14
+module load vcflib/1.0.3
+
+printf "%s\n" {1..20} | xargs -I {} -P 10 -n 1 sh -c "
+    iHS -t 1,3,5 --file /home/zhu46/scratch/macaca/26.iHS/phased_vcf/aureus."{}".vcf.vcf.gz \ 
+        --region chr"{}" --type GT --threads 1 \
+        > /home/zhu46/scratch/macaca/26.iHS/aureus_fascicularis."{}".out ; \
+    smoother --format iHS -w 100000 -s 100000 \
+        --file /home/zhu46/scratch/macaca/26.iHS/aureus_fascicularis."{}".out \
+        > /home/zhu46/scratch/macaca/26.iHS/aureus_fascicularis_chr"{}"_100k.out \
+    smoother --format iHS -w 30000 -s 30000 \
+        --file /home/zhu46/scratch/macaca/26.iHS/aureus_fascicularis."{}".out \
+        > /home/zhu46/scratch/macaca/26.iHS/aureus_fascicularis_chr"{}"_30k.out \    
+    "
+```
+
 ### dNdS 
 dNdS value is also an indicator of selection but it can reveal that which type of selection operates on that gene.  
 

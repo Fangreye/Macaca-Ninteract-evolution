@@ -260,27 +260,35 @@ Low nucleotide diversity means that this region is under selection in recent tim
 Pi values are already contained in the output of popgenWindows.py. They are located in the 6th and 7th column.
 
 ### Group iHH
-The vcf file should also be phased and bgzipped.
+The vcf file should also be phased. 
 
 vignette explaining iHH:
+
 https://cran.r-project.org/web/packages/rehh/vignettes/rehh.html#computing-ehh-ehhs-and-their-integrals-ihh-and-ies
-Mannual of vcflib (at the bottom):
-http://gensoft.pasteur.fr/docs/vcflib/1.0.1/README.md
+
+Mannual of selscan:
+
+https://github.com/szpiech/selscan
+
+Build snp maps from vcf. Selscan will only use the genetic distance but plink will mark all genetic distance to 0. To deal with this problem, use physical distance as genetic distance.
 
 ```
-module load htslib/1.14
-module load vcflib/1.0.3
+module load StdEnv/2020
+module load plink/1.9b_6.21-x86_64
+for i in $(ls 05.phased_vcf/*); do 
+    q=$(basename ${i} .vcf.vcf.gz);
+    plink --const-fid 0 --vcf ${i} --recode --out 07.snp_map/${q}.map;
+    awk '{ print $1"\t"$2"\t"$4"\t"$4 }' 07.snp_map/${q}.map.map > 08.snp_map_alt/${q}.map
+done
+```
 
-printf "%s\n" {1..20} | xargs -I {} -P 10 -n 1 sh -c "
-    iHS -t 1,3,5 --file /home/zhu46/scratch/macaca/26.iHS/phased_vcf/aureus."{}".vcf.vcf.gz \ 
-        --region chr"{}" --type GT --threads 1 \
-        > /home/zhu46/scratch/macaca/26.iHS/aureus_fascicularis."{}".out ; \
-    smoother --format iHS -w 100000 -s 100000 \
-        --file /home/zhu46/scratch/macaca/26.iHS/aureus_fascicularis."{}".out \
-        > /home/zhu46/scratch/macaca/26.iHS/aureus_fascicularis_chr"{}"_100k.out \
-    smoother --format iHS -w 30000 -s 30000 \
-        --file /home/zhu46/scratch/macaca/26.iHS/aureus_fascicularis."{}".out \
-        > /home/zhu46/scratch/macaca/26.iHS/aureus_fascicularis_chr"{}"_30k.out \    
+
+```
+module load nixpkgs/16.09  intel/2018.3
+module load selscan
+
+selscan --ihs --trunc-ok --threads 10 --cutoff 0.05 \
+  --ehh-win 100000 --vcf ./test1.vcf --map ./new_test.map --out ./test
     "
 ```
 

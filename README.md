@@ -26,44 +26,27 @@ References genome and annotations come from UCSC:
   4. https://hgdownload.soe.ucsc.edu/goldenPath/rheMac10/bigZips/genes/rheMac10.ncbiRefSeq.gtf.gz
 
 ## Individuals in each subgroup:
-|:-|:-|
+| Groups | Individuals |
+| ----------- | ----------- |
 |indian||
 |orange|35051,38591,35724,30423,35722,38402,27347,34770,34595,35943,35255,37731,37738,36329,36374,38440,36466,36468,35872,39320,35718,34598,35491,36357,35247,35253,38411,38431,38631,36371,37733,37743,38646,38427,32510,39345,35957,36471,34764,36460,36464,36476,36477,36470,24898,28518,35895,31505,35921,35252,35916,37745,37736,38645,35868,35866,36359,34597,36467,35494,35730,35734,38433,38401,30119,37732,35496,35092,35250,39238,35094,34769,30110,39190,35055,38432,35256,35919,35091,11433-07b,11414-01b|
-
-brown 34753,35495,35498,28500,38621,35723,38627,39317
-
-red 32754
-
-Chinese
-
-purple C_rhe_33,C_rhe_35,C_rhe_36,C_rhe_37,C_rhe_38,C_rhe_63,C_rhe_69,C_rhe_39,C_rhe_40,C_rhe_44,C_rhe_59,C_rhe_42,C_rhe_45,C_rhe_64,C_rhe_66,C_rhe_41,C_rhe_48,C_rhe_60,C_rhe_57,C_rhe_58,C_rhe_61,C_rhe_43,C_rhe_46,C_rhe_49,C_rhe_47,C_rhe_50
-
-blue C_rhe_17,C_rhe_20,C_rhe_18,C_rhe_19,C_rhe_21,C_rhe_27,C_rhe_32,C_rhe_29,C_rhe_28,C_rhe_31,C_rhe_30,C_rhe_1,C_rhe_3,C_rhe_4,C_rhe_2,C_rhe_5,C_rhe_34,C_rhe_68,C_rhe_6,C_rhe_7,C_rhe_10,C_rhe_8,C_rhe_9,C_rhe_11,C_rhe_12,C_rhe_13,C_rhe_14,C_rhe_16,C_rhe_15,C_rhe_22,C_rhe_25,C_rhe_24,C_rhe_23,C_rhe_26
-
-red C_rhe_51,C_rhe_54,C_rhe_52,C_rhe_53,C_rhe_55,C_rhe_56,C_rhe_62,C_rhe_65,C_rhe_67,C_rhe_71,C_rhe_72,C_rhe_75,C_rhe_76,C_rhe_74,C_rhe_78,C_rhe_79,C_rhe_73,C_rhe_77,C_rhe_70
-
-
-aureus
-
-aureus DRR219370_trim_sorted.bam,DRR219369_trim_sorted.bam
-
-fascicularis DRR219371_trim_sorted.bam,SRA023855_trim_sorted.bam,SRR1564766_trim_sorted.bam
-
-thibetana SRR1024051_trim_sorted.bam
-
-assamensis SRR2981114_trim_sorted.bam
-
-arctoides
-
-arctoides Malaya,SM1.Arctoides-1,SM2.Arctoides-2
-
-assamensis A20,XH1.Assamensis
-
-thibetana Tibetan-macaque-NO.3
-
-mulatta BGI-96346.mulatta,BGI.Mulatta-1,CR-5.Mulatta-2
-
-fascicularis BGI-CE-4.fascicularis
+|brown|34753,35495,35498,28500,38621,35723,38627,39317|
+|red|32754|
+|Chinese||
+|purple|C_rhe_33,C_rhe_35,C_rhe_36,C_rhe_37,C_rhe_38,C_rhe_63,C_rhe_69,C_rhe_39,C_rhe_40,C_rhe_44,C_rhe_59,C_rhe_42,C_rhe_45,C_rhe_64,C_rhe_66,C_rhe_41,C_rhe_48,C_rhe_60,C_rhe_57,C_rhe_58,C_rhe_61,C_rhe_43,C_rhe_46,C_rhe_49,C_rhe_47,C_rhe_50|
+|blue|C_rhe_17,C_rhe_20,C_rhe_18,C_rhe_19,C_rhe_21,C_rhe_27,C_rhe_32,C_rhe_29,C_rhe_28,C_rhe_31,C_rhe_30,C_rhe_1,C_rhe_3,C_rhe_4,C_rhe_2,C_rhe_5,C_rhe_34,C_rhe_68,C_rhe_6,C_rhe_7,C_rhe_10,C_rhe_8,C_rhe_9,C_rhe_11,C_rhe_12,C_rhe_13,C_rhe_14,C_rhe_16,C_rhe_15,C_rhe_22,C_rhe_25,C_rhe_24,C_rhe_23,C_rhe_26|
+|red|C_rhe_51,C_rhe_54,C_rhe_52,C_rhe_53,C_rhe_55,C_rhe_56,C_rhe_62,C_rhe_65,C_rhe_67,C_rhe_71,C_rhe_72,C_rhe_75,C_rhe_76,C_rhe_74,C_rhe_78,C_rhe_79,C_rhe_73,C_rhe_77,C_rhe_70|
+|aureus||
+|aureus|DRR219370_trim_sorted.bam,DRR219369_trim_sorted.bam|
+|fascicularis|DRR219371_trim_sorted.bam,SRA023855_trim_sorted.bam,SRR1564766_trim_sorted.bam|
+|thibetana|SRR1024051_trim_sorted.bam|
+|assamensis|SRR2981114_trim_sorted.bam|
+|arctoides||
+|arctoides|Malaya,SM1.Arctoides-1,SM2.Arctoides-2|
+|assamensis|A20,XH1.Assamensis|
+|thibetana|Tibetan-macaque-NO.3|
+|mulatta|BGI-96346.mulatta,BGI.Mulatta-1,CR-5.Mulatta-2|
+|fascicularis|BGI-CE-4.fascicularis|
 
 # Description of work flow and detailed pipeline
 ## Build phylogeny

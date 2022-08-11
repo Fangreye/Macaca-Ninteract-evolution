@@ -341,6 +341,20 @@ After getting the results from all sampled genes, use 05.get_dNdS.py to convert 
 python ../../get_dNdS.py -i Ninteract/ -o Chinese_Ninteract.csv > Ninteract_failed.txt
 ```
 
+### Introgression analysis
+Use admixfrog: 
+https://github.com/benjaminpeter/admixfrog
+
+I highly recommend use a virtual environment for this program and install the dependency by hand. There is bug in scipy-stack/2022a module as the syntax is in python-2 style and version of numpy is lower than needed by the current version of admixfrog (in 2022-08-11).
+
+```
+vcftools --gzvcf ../FandM_chr01_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz \
+  --max-missing 0.5 --minQ 30 --recode --recode-INFO-all \
+  --out ./FandM_chr01_mm_0.5_minQ_30
+```
+
+{placeholder}
+
 # Data analysis
 ## Annotate the results of roh/fst/pi and perform permutation test
 To quantify the effect of containing genes and N-interact genes, we need to annotate the roh/sliding windows. A random shaffle of the label representing having Ninteract genes is also executed during this step.
@@ -360,6 +374,7 @@ ls *.csv | xargs -I {} -n 1 -P 30 sh -c 'q=$(basename {} .csv); perl ~/Data/rhes
   /home/jianlong/Data/rhesus/09.find_auto/indian_all/output/${q}.density.out \
   2>/dev/null 1> /home/jianlong/Data/rhesus/09.find_auto/indian_all/output/${q}.perms.out'
 ```
+
 ## Model fitting with R
 Considering autocorrelation, we use block bootstrap to fit the linear model for sliding windows. See 'R_script' for further information
 
